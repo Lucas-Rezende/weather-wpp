@@ -9,7 +9,7 @@ int main(int argc, char const *argv[])
     weatherdatafetcher dataFetcher;
 
     // Chamar o método fetchData() para buscar os dados
-    float latitude = 52.52;
+    float latitude = -19.92;
     float longitude = 13.41;
     unsigned int diasdeprevisao = 3;
     std::string datainicial = "2023-06-23";

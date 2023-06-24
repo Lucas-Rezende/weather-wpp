@@ -14,7 +14,8 @@ public:
     std::string datafinal);
 
     void saveDataToFile(const std::string& data);
-    std::string loadDataFromFile(const std::string& filename);
+
+    //std::string loadDataFromFile(const std::string& filename);
     /* TODO Adicionar os métodos pra cada variável */
 };
 

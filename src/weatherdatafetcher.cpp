@@ -28,7 +28,7 @@ void weatherdatafetcher::fetchData(float latitude, float longitude, unsigned int
             return;
         }
 
-        saveDataToFile(response);  // Passa o valor de response para o método saveDataToFile
+        saveDataToFile(response);
     }
 }
 
@@ -44,6 +44,6 @@ void weatherdatafetcher::saveDataToFile(const std::string& data) {
     }
 }
 
-std::string weatherdatafetcher::loadDataFromFile(const std::string& filename) {
+/*std::string weatherdatafetcher::loadDataFromFile(const std::string& filename) {
     return "";
-}
+}*/

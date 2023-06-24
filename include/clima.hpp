@@ -1,6 +1,7 @@
 #ifndef CLIMA_HPP
 #define CLIMA_HPP
 
+#include <iostream>
 #include <string>
 
 class Clima
@@ -11,7 +12,7 @@ private:
     float _apparent_temperature;
     float _precipitation_probability;
     float _maximum_temperature;
-    float _minimum_temperatude;
+    float _minimum_temperature;
     std::string _sunrise;
     std::string _sunset;
     std::string _date;
@@ -22,7 +23,7 @@ public:
           float apparent_temperature,
           float precipitation_probability,
           float maximum_temperature,
-          float minimum_temperatude,
+          float minimum_temperature,
           std::string sunrise,
           std::string sunset,
           std::string date
