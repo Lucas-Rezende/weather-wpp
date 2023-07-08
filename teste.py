@@ -1,37 +1,73 @@
-# Importar o módulo json
 import json
-from datetime import datetime
 
+def process_data(data):
+    # Carregar o JSON
+    json_data = json.loads(data)
 
-# Ler o arquivo .txt com os dados em formato JSON
-with open("data/data.txt") as f:
-    dados = f.read()
+    # Obter as informações desejadas
+    daily_data = json_data['daily']
+    hourly_data = json_data['hourly']
 
-# Converter o texto em um objeto JSON
-objeto = json.loads(dados)
+    # Organizar os dados por dia e hora
+    daily_info = {}
+    for i, date in enumerate(daily_data['time']):
+        daily_info[date] = {
+            'max_temperature': daily_data['temperature_2m_max'][i],
+            'min_temperature': daily_data['temperature_2m_min'][i],
+            'sunrise': daily_data['sunrise'][i],
+            'sunset': daily_data['sunset'][i],
+            'hourly_data': []
+        }
 
-# Acessar os valores que você quer usando as chaves do objeto
-latitude = objeto["latitude"]
-longitude = objeto["longitude"]
-temperatura_maxima = objeto["daily"]["temperature_2m_max"]
-temperatura_minima = objeto["daily"]["temperature_2m_min"]
-nascer_do_sol = objeto["daily"]["sunrise"]
-por_do_sol = objeto["daily"]["sunset"]
-tempo = objeto["hourly"]["time"]
-temperatura = objeto["hourly"]["temperature_2m"]
+    for i, hour in enumerate(hourly_data['time']):
+        date, time = hour.split('T')
+        temperature = hourly_data['temperature_2m'][i]
+        humidity = hourly_data['relativehumidity_2m'][i]
+        apparent_temperature = hourly_data['apparent_temperature'][i]
+        precipitation_probability = hourly_data['precipitation_probability'][i]
 
-# Imprimir os valores na tela
-# Para cada índice na lista de tempo
-for i in range(len(tempo)):
-    # Converter a string de tempo em um objeto datetime
-    data_hora = datetime.fromisoformat(tempo[i])
+        daily_info[date]['hourly_data'].append({
+            'time': time,
+            'temperature': temperature,
+            'humidity': humidity,
+            'apparent_temperature': apparent_temperature,
+            'precipitation_probability': precipitation_probability
+        })
 
-    # Acessar os atributos de data e hora do objeto datetime
-    data = data_hora.date()
-    hora = data_hora.time()
-    # Imprimir a data, hora e temperatura correspondentes
-    print(f"Data: {data}, Hora: {hora}, Temperatura: {temperatura[i]}")
+    # Salvar os dados organizados em um arquivo de texto
+    with open('data/datapy.txt', 'w') as file:
+        for date, info in daily_info.items():
+            max_temp = info['max_temperature']
+            min_temp = info['min_temperature']
+            sunrise = info['sunrise']
+            sunset = info['sunset']
+            hourly_data = info['hourly_data']
 
-# Salvar os dados filtrados no arquivo
-with open("data/datapy.txt", "w") as f:
-    f.write(json.dumps(objeto, indent=4))
+            file.write(f"Data: {date}\n")
+            file.write(f"Max Temperature: {max_temp}°C\n")
+            file.write(f"Min Temperature: {min_temp}°C\n")
+            file.write(f"Sunrise: {sunrise}\n")
+            file.write(f"Sunset: {sunset}\n")
+
+            file.write("Hourly Data:\n")
+            for hour_data in hourly_data:
+                time = hour_data['time']
+                temperature = hour_data['temperature']
+                humidity = hour_data['humidity']
+                apparent_temperature = hour_data['apparent_temperature']
+                precipitation_probability = hour_data['precipitation_probability']
+
+                file.write(f"{date} {time} {temperature} {humidity} {apparent_temperature} {precipitation_probability}\n")
+
+            file.write("\n")
+
+    print("Data saved to file.")
+
+# Ler o JSON da API
+with open('data/data.txt', 'r') as file:
+    data = file.read()
+
+# Processar os dados e salvar em um arquivo
+process_data(data)
+
+print("Dados do clima processados.")

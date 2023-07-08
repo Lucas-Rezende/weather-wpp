@@ -45,5 +45,15 @@ void weatherdatafetcher::saveDataToFile(const std::string& data) {
 }
 
 std::string weatherdatafetcher::loadDataFromFile(const std::string& filename) {
-    // O que fazer aqui?
+    std::ifstream inputFile(filename);
+    std::string data;
+
+    if (inputFile.is_open()) {
+        std::getline(inputFile, data);
+        inputFile.close();
+    } else {
+        std::cerr << "Error: Failed to open the file." << std::endl;
+    }
+
+    return data;
 }

@@ -1,30 +1,40 @@
-#include "include/weatherdatafetcher.hpp"
-#include "include/clima.hpp"
-
 #include <iostream>
+#include <fstream>
+#include <string>
 
-int main(int argc, char const *argv[])
-{
-    // Criar uma instância do WeatherDataFetcher
-    weatherdatafetcher dataFetcher;
+#include "include/weatherdatafetcher.hpp"
 
-    // Chamar o método fetchData() para buscar os dados
-    float latitude = -19.92;
-    float longitude = 13.41;
-    unsigned int diasdeprevisao = 3;
-    std::string datainicial = "2023-06-23";
-    std::string datafinal = "2023-06-26";
-    dataFetcher.fetchData(latitude, longitude, diasdeprevisao, datainicial, datafinal);
+int main() {
+    // Criar uma instância da classe weatherdatafetcher
+    weatherdatafetcher weatherFetcher;
 
-    // Carregar os dados do arquivo
-    const std::string dataPath = "data/";
+    // Chamar a função fetchData na instância criada
+    weatherFetcher.fetchData(-19.9208, -43.9378, 2, "2023-07-08", "2023-07-10");
 
-    std::string filePath = dataPath + "data.txt";
-    std::string loadedData = dataFetcher.loadDataFromFile(filePath);
+    std::ifstream file("data/datapy.txt");
+    if (!file) {
+        std::cerr << "Erro ao abrir o arquivo." << std::endl;
+        return 1;
+    }
 
-    // Imprimir os dados carregados
-    std::cout << "Dados carregados do arquivo:" << std::endl;
-    std::cout << loadedData << std::endl;
+    std::string line;
+    while (std::getline(file, line)) {
+        if (line.substr(0, 4) == "Data") {
+            std::cout << line << std::endl;
+        } else if (line.substr(0, 3) == "Max") {
+            std::cout << "Temperatura Máxima: " << line.substr(line.find(":") + 2) << std::endl;
+        } else if (line.substr(0, 3) == "Min") {
+            std::cout << "Temperatura Mínima: " << line.substr(line.find(":") + 2) << std::endl;
+        } else if (line.substr(0, 7) == "Sunrise") {
+            std::cout << "Nascer do Sol: " << line.substr(line.find(":") + 2) << std::endl;
+        } else if (line.substr(0, 6) == "Sunset") {
+            std::cout << "Pôr do Sol: " << line.substr(line.find(":") + 2) << std::endl;
+        } else if (line.substr(0, 4) == "2023") {
+            std::cout << line << std::endl;
+        }
+    }
+
+    file.close();
 
     return 0;
 }

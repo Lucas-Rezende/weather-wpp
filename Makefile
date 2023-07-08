@@ -32,4 +32,6 @@ $(OBJDIR)/main.o: main.cpp
 clean:
 	rm -f $(OBJDIR)/*.o $(BINDIR)/$(TARGET)
 
-.PHONY: clean
+# Execução do programa
+run:
+	$(BINDIR)/$(TARGET)

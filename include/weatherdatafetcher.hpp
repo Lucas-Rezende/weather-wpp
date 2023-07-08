@@ -6,6 +6,11 @@
 class weatherdatafetcher
 {
 private:
+    float latitude;
+    float longitude;
+    unsigned int diasdeprevisao;
+    std::string datainicial;
+    std::string datafinal;
 public:
     void fetchData(float latitude,
     float longitude,
@@ -15,7 +20,7 @@ public:
 
     void saveDataToFile(const std::string& data);
 
-    //std::string loadDataFromFile(const std::string& filename);
+    std::string loadDataFromFile(const std::string& filename);
     /* TODO Adicionar os métodos pra cada variável */
 };
 
