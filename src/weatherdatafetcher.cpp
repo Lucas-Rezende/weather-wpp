@@ -44,6 +44,6 @@ void weatherdatafetcher::saveDataToFile(const std::string& data) {
     }
 }
 
-/*std::string weatherdatafetcher::loadDataFromFile(const std::string& filename) {
-    return "";
-}*/
+std::string weatherdatafetcher::loadDataFromFile(const std::string& filename) {
+    // O que fazer aqui?
+}
