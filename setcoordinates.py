@@ -6,8 +6,7 @@ geolocator = Nominatim(user_agent="weather-wpp")
 geocode = partial(geolocator.geocode, language="en")
 
 # Função para pesquisar por cidade, estado e país
-def pesquisar_localizacao(cidade, estado, pais):
-    endereco = f"{cidade}, {estado}, {pais}"
+def pesquisar_localizacao(endereco):
     location = geocode(endereco)
     if location:
         latitude = location.latitude
@@ -17,9 +16,7 @@ def pesquisar_localizacao(cidade, estado, pais):
         print("Erro.")
 
 # Ler os valores de cidade, estado e país do C++
-cidade = input()
-estado = input()
-pais = input()
+endereco = input()
 
 # Chamar a função de pesquisa
-pesquisar_localizacao(cidade, estado, pais)
+pesquisar_localizacao(endereco)
