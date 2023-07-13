@@ -1,4 +1,7 @@
 #include <chrono>
+#include <ctime>
+#include <iomanip>
+#include <sstream>
 
 #include "../include/gettime.hpp"
 
@@ -8,11 +11,9 @@ std::string getTime::Date() {
     std::time_t now = std::time(nullptr);
     std::tm* localTime = std::localtime(&now);
 
-    int day = localTime->tm_mday;
-    int month = localTime->tm_mon + 1;
-    int year = localTime->tm_year + 1900; 
-
-    std::string processdate = std::to_string(year) + "-" + std::to_string(month) + "-" + std::to_string(day);
+    std::ostringstream oss;
+    oss << std::put_time(localTime, "%Y-%m-%d");
+    std::string processdate = oss.str();
 
     return processdate;
 }
