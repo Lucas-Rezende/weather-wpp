@@ -5,6 +5,7 @@
 
 #include "include/weatherdatafetcher.hpp"
 #include "include/getcoordinates.hpp"
+#include "include/gettime.hpp"
 
 int main()
 {
@@ -19,8 +20,11 @@ int main()
     std::cout << "Longitude: " << lon << std::endl;
 
     weatherdatafetcher weatherFetcher;
+    getTime gettime;
 
-    weatherFetcher.fetchData(lat, lon, 2, "2023-07-12", "2023-07-14");
+    std::string todaydate = gettime.Date();
+
+    weatherFetcher.fetchData(lat, lon, 0, todaydate, todaydate);
 
     std::ifstream file("data/datapy.txt");
     if (!file)
@@ -30,21 +34,18 @@ int main()
     }
 
     std::string line;
+    std::string currentDate;
     while (std::getline(file, line))
     {
         if (line.substr(0, 4) == "Data")
         {
+            if (!currentDate.empty())
+                std::cout << std::endl; // Separar os dados de cada dia
+
+            currentDate = line.substr(line.find(":") + 2);
             std::cout << line << std::endl;
         }
-        else if (line.substr(0, 3) == "Max")
-        {
-            std::cout << "Temperatura Máxima: " << line.substr(line.find(":") + 2) << std::endl;
-        }
-        else if (line.substr(0, 3) == "Min")
-        {
-            std::cout << "Temperatura Mínima: " << line.substr(line.find(":") + 2) << std::endl;
-        }
-        else if (line.substr(0, 7) == "Sunrise")
+        else if (line.substr(0, 3) == "Sunrise")
         {
             std::cout << "Nascer do Sol: " << line.substr(line.find(":") + 2) << std::endl;
         }

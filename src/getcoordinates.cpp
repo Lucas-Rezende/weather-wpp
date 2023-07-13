@@ -5,7 +5,7 @@
 getCoordinates::getCoordinates() {}
 
 void getCoordinates::Coordinates() {
-    std::string command = "python setcoordinates.py";
+    std::string command = "python3 setcoordinates.py";
 
     FILE *pipe = popen(command.c_str(), "r");
     if (!pipe)

@@ -1,7 +1,9 @@
 #include "../include/weatherdatafetcher.hpp"
-#include <iostream>
-#include <fstream>
+
+#include <cstdlib>
 #include <curl/curl.h>
+#include <fstream>
+#include <iostream>
 
 size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* output) {
     size_t totalSize = size * nmemb;
@@ -10,7 +12,8 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* out
 }
 
 void weatherdatafetcher::fetchData(float latitude, float longitude, unsigned int diasdeprevisao, std::string datainicial, std::string datafinal) {
-    std::string url = "https://api.open-meteo.com/v1/forecast?latitude=" + std::to_string(latitude) + "&longitude=" + std::to_string(longitude) + "&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&forecast_days=" + std::to_string(diasdeprevisao) + "&start_date=" + datainicial + "&end_date=" + datafinal + "&timezone=America%2FSao_Paulo";
+    std::string url = "https://api.open-meteo.com/v1/forecast?latitude=" + std::to_string(latitude) + "&longitude=" + std::to_string(longitude) + "&hourly=temperature_2m,precipitation_probability,precipitation&daily=sunrise,sunset&current_weather=true&timezone=America%2FSao_Paulo&forecast_days=" + std::to_string(diasdeprevisao) + "&start_date=" + datainicial + "&end_date=" + datainicial;
+
     
     CURL* curl = curl_easy_init();
     std::string response;
@@ -29,6 +32,13 @@ void weatherdatafetcher::fetchData(float latitude, float longitude, unsigned int
         }
 
         saveDataToFile(response);
+    }
+
+    std::string command = "python3 processdata.py";
+    int exitCode = system(command.c_str());
+    if (exitCode != 0) {
+        std::cout << "Erro ao executar o script Python." << std::endl;
+        return;
     }
 }
 
