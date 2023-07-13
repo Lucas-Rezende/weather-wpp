@@ -49,6 +49,11 @@
         "chrono": "cpp",
         "ctime": "cpp",
         "ratio": "cpp",
-        "sstream": "cpp"
-    }
+        "sstream": "cpp",
+        "iomanip": "cpp"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.formatting.provider": "none"
 }

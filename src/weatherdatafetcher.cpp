@@ -12,8 +12,11 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* out
 }
 
 void weatherdatafetcher::fetchData(float latitude, float longitude, unsigned int diasdeprevisao, std::string datainicial, std::string datafinal) {
-    std::string url = "https://api.open-meteo.com/v1/forecast?latitude=" + std::to_string(latitude) + "&longitude=" + std::to_string(longitude) + "&hourly=temperature_2m,precipitation_probability,precipitation&daily=sunrise,sunset&current_weather=true&timezone=America%2FSao_Paulo&forecast_days=" + std::to_string(diasdeprevisao) + "&start_date=" + datainicial + "&end_date=" + datainicial;
-
+    std::string url;
+    if (datainicial == datafinal)
+    {
+        url = "https://api.open-meteo.com/v1/forecast?latitude=" + std::to_string(latitude) + "&longitude=" + std::to_string(longitude) + "&hourly=temperature_2m,relativehumidity_2m,precipitation_probability,weathercode&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&current_weather=true&timezone=America%2FSao_Paulo&forecast_days=3&start_date=" + datainicial + "&end_date=" + datafinal;
+    }
     
     CURL* curl = curl_easy_init();
     std::string response;

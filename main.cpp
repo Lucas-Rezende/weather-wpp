@@ -6,60 +6,39 @@
 #include "include/weatherdatafetcher.hpp"
 #include "include/getcoordinates.hpp"
 #include "include/gettime.hpp"
+#include "include/hourlydatafilter.hpp"
 
 int main()
 {
     getCoordinates getcoord;
+    weatherdatafetcher weatherFetcher;
+    getTime gettime;
 
     getcoord.Coordinates();
 
     float lat = getcoord.getLatitude();
     float lon = getcoord.getLongitude();
 
-    std::cout << "Latitude: " << lat << std::endl;
-    std::cout << "Longitude: " << lon << std::endl;
-
-    weatherdatafetcher weatherFetcher;
-    getTime gettime;
-
     std::string todaydate = gettime.Date();
 
     weatherFetcher.fetchData(lat, lon, 0, todaydate, todaydate);
 
-    std::ifstream file("data/datapy.txt");
-    if (!file)
-    {
-        std::cerr << "Erro ao abrir o arquivo." << std::endl;
-        return 1;
-    }
+    getTime gt;
+    std::string date = gt.Date();
+    std::string hour = gt.CompleteHour();
 
-    std::string line;
-    std::string currentDate;
-    while (std::getline(file, line))
-    {
-        if (line.substr(0, 4) == "Data")
-        {
-            if (!currentDate.empty())
-                std::cout << std::endl; // Separar os dados de cada dia
+    hourlyDataFilter hdf;
+    float max = hdf.getMaxTemperature();
+    float min = hdf.getMinTemperature();
+    std::string sunset = hdf.getSunsetTime();
+    std::string sunrise = hdf.getSunriseTime();
 
-            currentDate = line.substr(line.find(":") + 2);
-            std::cout << line << std::endl;
-        }
-        else if (line.substr(0, 3) == "Sunrise")
-        {
-            std::cout << "Nascer do Sol: " << line.substr(line.find(":") + 2) << std::endl;
-        }
-        else if (line.substr(0, 6) == "Sunset")
-        {
-            std::cout << "Pôr do Sol: " << line.substr(line.find(":") + 2) << std::endl;
-        }
-        else if (line.substr(0, 4) == "2023")
-        {
-            std::cout << line << std::endl;
-        }
-    }
+    std::string temptest = date + "T" + std::to_string(gt.Hour()) + ":00";
 
-    file.close();
+    std::cout << "Temperatura nesse momento: " << hdf.getTemperatureDataAtTime(temptest) << std::endl;
+    std::cout << "Umidade nesse momento: " << hdf.getRelativeHumidityDataAtTime(temptest) << std::endl;
+    std::cout << "Chance de precipitação nesse momento: " << hdf.getPrecipitationProbailityDataAtTime(temptest) << std::endl;
+    std::cout << "Weathercode nesse momento: " << hdf.getWeatherCodeDataAtTime(temptest) << std::endl;
 
     return 0;
 }

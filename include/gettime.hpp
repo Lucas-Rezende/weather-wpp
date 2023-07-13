@@ -9,6 +9,7 @@ private:
 public:
     getTime();
     std::string Date();
+    std::string CompleteHour();
     unsigned int Hour();
 };
 
