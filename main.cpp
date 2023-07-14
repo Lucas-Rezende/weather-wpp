@@ -54,21 +54,39 @@ int main()
     std::cout << "Weathercode nesse momento: " << hdf.getWeatherCodeDataAtTime(temptest) << std::endl;
 
     using namespace ftxui;
+    // Define some variables to display.
+    int x = 42;
+    std::string y = "Hello";
+    double z = 3.14;
 
-    // Define the document
-    Element document =
-        hbox({
-            text(temptest) | border,
-            text("middle") | border | flex,
-            text(tn  + "°C") | border,
-        });
+    // Convert the variables into elements.
+    Element x_element = text(tn + "°C");
+    Element y_element = text(temptest);
+    Element z_element = text("Weather");
 
-    auto screen = Screen::Create(
-        Dimension::Full(),       // Width
-        Dimension::Fit(document) // Height
-    );
-    Render(screen, document);
-    screen.Print();
+    // Create boxes with borders around the elements.
+    Element x_box = border(x_element);
+    Element y_box = border(y_element);
+    Element z_box = border(z_element);
+
+    // Arrange the boxes horizontally with some space between them.
+    Element boxes = hbox({
+        x_box | flex,
+        separator(),
+        y_box | flex,
+        separator(),
+        z_box | flex,
+    });
+
+    // Change the background color of the terminal to cyan.
+    Element colored = bgcolor(Color::Magenta, boxes);
+
+    // Render the element into a screen.
+    auto screen = Screen::Create(Dimension::Full(), Dimension::Fit(colored));
+    Render(screen, colored);
+
+    // Print the screen to the standard output.
+    std::cout << screen.ToString() << std::endl;
 
     return 0;
 }

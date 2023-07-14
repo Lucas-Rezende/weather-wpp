@@ -1,8 +1,0 @@
-/mnt/c/Programas/Programming/repos/weather-wpp/build/CMakeFiles/app.dir
-/mnt/c/Programas/Programming/repos/weather-wpp/build/CMakeFiles/build_all.dir
-/mnt/c/Programas/Programming/repos/weather-wpp/build/CMakeFiles/clean_all.dir
-/mnt/c/Programas/Programming/repos/weather-wpp/build/CMakeFiles/run.dir
-/mnt/c/Programas/Programming/repos/weather-wpp/build/CMakeFiles/package.dir
-/mnt/c/Programas/Programming/repos/weather-wpp/build/CMakeFiles/package_source.dir
-/mnt/c/Programas/Programming/repos/weather-wpp/build/CMakeFiles/edit_cache.dir
-/mnt/c/Programas/Programming/repos/weather-wpp/build/CMakeFiles/rebuild_cache.dir

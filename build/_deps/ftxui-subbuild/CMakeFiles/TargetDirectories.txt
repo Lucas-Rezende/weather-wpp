@@ -1,3 +1,0 @@
-/mnt/c/Programas/Programming/repos/weather-wpp/build/_deps/ftxui-subbuild/CMakeFiles/ftxui-populate.dir
-/mnt/c/Programas/Programming/repos/weather-wpp/build/_deps/ftxui-subbuild/CMakeFiles/edit_cache.dir
-/mnt/c/Programas/Programming/repos/weather-wpp/build/_deps/ftxui-subbuild/CMakeFiles/rebuild_cache.dir

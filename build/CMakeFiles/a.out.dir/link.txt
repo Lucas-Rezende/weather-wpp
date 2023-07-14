@@ -1,1 +1,0 @@
-/usr/sbin/c++ CMakeFiles/a.out.dir/main.cpp.o obj/getcoordinates.o obj/gettime.o obj/hourlydatafilter.o obj/weatherdatafetcher.o -o a.out  _deps/ftxui-build/libftxui-screen.a _deps/ftxui-build/libftxui-dom.a _deps/ftxui-build/libftxui-screen.a 
