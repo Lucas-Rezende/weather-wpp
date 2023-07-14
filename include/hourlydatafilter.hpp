@@ -16,7 +16,7 @@ public:
     std::string getHourlyDataAtTime(std::string datetime);
     std::string getTemperatureDataAtTime(std::string hourlydata);
     std::string getRelativeHumidityDataAtTime(std::string hourlydata);
-    std::string getPrecipitationProbailityDataAtTime(std::string hourlydata);
+    std::string getPrecipitationProbabilityDataAtTime(std::string hourlydata);
     std::string getWeatherCodeDataAtTime(std::string hourlydata);
 };
 

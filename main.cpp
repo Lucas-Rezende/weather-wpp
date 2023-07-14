@@ -33,11 +33,20 @@ int main()
     std::string sunset = hdf.getSunsetTime();
     std::string sunrise = hdf.getSunriseTime();
 
-    std::string temptest = date + "T" + std::to_string(gt.Hour()) + ":00";
+    std::string temptest;
+    if (gt.Hour() >= 10)
+    {
+        temptest = date + "T" + std::to_string(gt.Hour()) + ":00";
+    } else
+    {
+        temptest = date + "T0" + std::to_string(gt.Hour()) + ":00";
+    }
+
+    std::cout << "Temptest:" << temptest << std::endl;
 
     std::cout << "Temperatura nesse momento: " << hdf.getTemperatureDataAtTime(temptest) << std::endl;
     std::cout << "Umidade nesse momento: " << hdf.getRelativeHumidityDataAtTime(temptest) << std::endl;
-    std::cout << "Chance de precipitação nesse momento: " << hdf.getPrecipitationProbailityDataAtTime(temptest) << std::endl;
+    std::cout << "Chance de precipitação nesse momento: " << hdf.getPrecipitationProbabilityDataAtTime(temptest) << std::endl;
     std::cout << "Weathercode nesse momento: " << hdf.getWeatherCodeDataAtTime(temptest) << std::endl;
 
     return 0;

@@ -160,7 +160,7 @@ std::string hourlyDataFilter::getRelativeHumidityDataAtTime(std::string hourlyDa
     return "Erro";
 }
 
-std::string hourlyDataFilter::getPrecipitationProbailityDataAtTime(std::string hourlyData) {
+std::string hourlyDataFilter::getPrecipitationProbabilityDataAtTime(std::string hourlyData) {
     std::string line = getHourlyDataAtTime(hourlyData);
     std::string delimiter = " ";
     size_t pos = 0;
