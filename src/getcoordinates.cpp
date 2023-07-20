@@ -4,8 +4,8 @@
 
 getCoordinates::getCoordinates() {}
 
-void getCoordinates::Coordinates() {
-    std::string command = "python3 setcoordinates.py";
+void getCoordinates::Coordinates(std::string local) const {
+    std::string command = "python3 setcoordinates.py \"" + local + "\"";
 
     FILE *pipe = popen(command.c_str(), "r");
     if (!pipe)

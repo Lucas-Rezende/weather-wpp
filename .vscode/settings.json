@@ -50,7 +50,18 @@
         "ctime": "cpp",
         "ratio": "cpp",
         "sstream": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "condition_variable": "cpp",
+        "csignal": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "optional": "cpp",
+        "mutex": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp",
+        "thread": "cpp",
+        "variant": "cpp",
+        "codecvt": "cpp"
     },
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter"

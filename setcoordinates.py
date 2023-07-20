@@ -5,7 +5,6 @@ from geopy.geocoders import Nominatim
 geolocator = Nominatim(user_agent="weather-wpp")
 geocode = partial(geolocator.geocode, language="en")
 
-# Função para pesquisar por cidade, estado e país
 def pesquisar_localizacao(endereco):
     location = geocode(endereco)
     if location:
@@ -15,8 +14,8 @@ def pesquisar_localizacao(endereco):
     else:
         print("Erro.")
 
-# Ler os valores de cidade, estado e país do C++
-endereco = input()
+# Obter o valor de endereco a partir dos argumentos de linha de comando
+endereco = sys.argv[1]
 
 # Chamar a função de pesquisa
 pesquisar_localizacao(endereco)
