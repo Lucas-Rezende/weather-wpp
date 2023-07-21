@@ -71,45 +71,65 @@ int main()
     });
 
     auto weather_renderer = Renderer(component, [&] { 
-                                        // Verifica o estado do aplicativo para alternar entre os layouts.
-                                        if (!input_confirmed)
-                                        {
-                                            return vbox({
-                                                text("WELCOME TO THE WEATHER-WPP") | center | color(Color::White) | bold,
-                                                text(emoji) | hcenter,
-                                                separator(),
-                                                hbox(text(" Insert your local : "), yourlocal->Render()),
-                                                hbox(center, button->Render()) | center,
-                                            }) | center | bgcolor(Color::RGB(109, 76, 182));
-                                        }
-                                        else
-                                        {
-                                            std::string date = gettime.Date();
-                                            std::string hour = gettime.CompleteHour();
-                                            std::string hour2 = std::to_string(gettime.Hour()) + ":00";
+        // Verifica o estado do aplicativo para alternar entre os layouts.
+        if (!input_confirmed)
+        {
+            return vbox({
+                text("WELCOME TO THE WEATHER-WPP") | center | color(Color::White) | bold,
+                text(emoji) | hcenter,
+                separator(),
+                hbox(text(" Insert your local : "), yourlocal->Render()),
+                hbox(center, button->Render()) | center,
+            }) | center | bgcolor(Color::RGB(109, 76, 182));
+        }
+        else
+        {
+            std::string date = gettime.Date();
+            std::string hour = gettime.CompleteHour();
+            unsigned int justhour = gettime.Hour();
+            std::string correcthour;
+            if (justhour < 10)
+            {
+                std::string justhour_str = std::to_string(justhour);
+                correcthour = "0" + justhour_str + ":00";
+            } else
+            {
+                std::string justhour_str = std::to_string(justhour);
+                correcthour = justhour_str + ":00";
+            }
 
-                                            std::string completedate = date + "T" + hour;
-                                            std::string completedate2 = date + "T" + hour2;
+            std::string completedatewmin = date + "T" + hour;
+            std::string completedatewoutmin = date + "T" + correcthour;
 
-                                            float maxTemperature = hourlydatafilter.getMaxTemperature();
-                                            float minTemperature = hourlydatafilter.getMinTemperature();
+            float maxTemperature = hourlydatafilter.getMaxTemperature();
+            float minTemperature = hourlydatafilter.getMinTemperature();
 
-                                            std::ostringstream ssMax, ssMin;
-                                            ssMax << std::fixed << std::setprecision(1) << maxTemperature;
-                                            ssMin << std::fixed << std::setprecision(1) << minTemperature;
+            std::ostringstream ssMax, ssMin;
+            ssMax << std::fixed << std::setprecision(1) << maxTemperature;
+            ssMin << std::fixed << std::setprecision(1) << minTemperature;
 
-                                            std::string max = ssMax.str();
-                                            std::string min = ssMin.str();
-                                            std::string maxmin = min + " - " + max;
-                                            std::string now = hourlydatafilter.getTemperatureDataAtTime(completedate2);
-                                            return vbox({
-                                                text("🌧️") | center | bold, // aqui seria algumascii
-                                                // haveria aqui uma divisão, do lado esquerdo o ascii e do direito as informações
-                                                separator(),
-                                                text(maxmin),
-                                                text(now),
-                                            }) | center | bgcolor(Color::RGB(110, 137, 223));
-                                        } 
+            std::string max = ssMax.str();
+            std::string min = ssMin.str();
+            std::string maxmin = min + " - " + max + " °C";
+            std::string now = hourlydatafilter.getTemperatureDataAtTime(completedatewoutmin);
+
+            return hbox({
+                hbox({
+                    text("     \\   /     \n"),
+                    text("      .-.      \n"),
+                    text("   ― (   ) ―   \n"),
+                    text("      `-’      \n"),
+                    text("     `-’      \n"),
+                    text("     /   \\     \n"),
+                    separator(),
+                    vbox({
+                        text(maxmin),
+                        text(now),
+                    }) | flex,
+                }),
+
+            }) | center | bgcolor(Color::RGB(110, 137, 223));
+        }
     });
 
     // CONFIGURATION
@@ -160,9 +180,6 @@ int main()
         float longitude = getcoordinates.getLongitude();
 
         std::string date = gettime.Date();
-        std::string hour = gettime.CompleteHour();
-
-        std::string completedate = date + "T" + hour;
 
         weatherdatafetcher.fetchData(latitude, longitude, 2, date, date);
     }
