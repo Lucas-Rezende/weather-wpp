@@ -35,6 +35,48 @@
 #include "ftxui/util/ref.hpp"
 
 using namespace ftxui;
+using namespace std::chrono_literals;
+
+class Graph {
+ public:
+  std::vector<int> operator()(int width, int height) const {
+    std::vector<int> output(width);
+    for (int i = 0; i < width; ++i) {
+      float v = 0;
+      v += 0.1f * sin((i + shift) * 0.1f);        // NOLINT
+      v += 0.2f * sin((i + shift + 10) * 0.15f);  // NOLINT
+      v += 0.1f * sin((i + shift) * 0.03f);       // NOLINT
+      v *= height;                                // NOLINT
+      v += 0.5f * height;                         // NOLINT
+      output[i] = static_cast<int>(v);
+    }
+    return output;
+  }
+  int shift = 0;
+};
+ 
+std::vector<int> triangle(int width, int height) {
+  std::vector<int> output(width);
+  for (int i = 0; i < width; ++i) {
+    output[i] = i % (height - 4) + 2;
+  }
+  return output;
+}
+
+Element create_weather_element(const Graph& my_graph) {
+    auto document = hbox({
+        vbox({
+            graph(my_graph),
+        }) | flex,
+    });
+
+    document |= border;
+
+    const int min_width = 40;
+    document |= size(HEIGHT, GREATER_THAN, min_width);
+
+    return document;
+}
 
 int main()
 {
@@ -70,7 +112,11 @@ int main()
         button,
     });
 
-    auto weather_renderer = Renderer(component, [&] { 
+    Graph my_graph;
+    Element weather_element = create_weather_element(my_graph);
+
+    auto weather_renderer = Renderer(component, [&]
+                                     { 
         // Verifica o estado do aplicativo para alternar entre os layouts.
         if (!input_confirmed)
         {
@@ -113,24 +159,19 @@ int main()
             std::string maxmin = min + " - " + max + " °C";
             std::string now = hourlydatafilter.getTemperatureDataAtTime(completedatewoutmin);
 
-            return hbox({
+            return vbox({
                 hbox({
-                    text("     \\   /     \n"),
-                    text("      .-.      \n"),
-                    text("   ― (   ) ―   \n"),
-                    text("      `-’      \n"),
-                    text("     `-’      \n"),
-                    text("     /   \\     \n"),
+                    vbox({
+                        weather_element | size(WIDTH, EQUAL, 100) | size(HEIGHT, EQUAL, 30),
+                    }),
                     separator(),
                     vbox({
                         text(maxmin),
                         text(now),
-                    }) | flex,
+                    }) | center | flex,
                 }),
-
-            }) | center | bgcolor(Color::RGB(110, 137, 223));
-        }
-    });
+            }) | center | bgcolor(Color::RGB(109, 76, 182));
+        } });
 
     // CONFIGURATION
 
