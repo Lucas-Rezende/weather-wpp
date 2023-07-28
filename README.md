@@ -1,6 +1,8 @@
 # weather-wpp
 
-#### Aplicativo de clima para terminal.
+Aplicativo de clima para terminal.
+
+![image](https://github.com/Lucas-Rezende/weather-wpp/assets/66080424/82e9e18d-185d-4460-92fe-319797216d45)
 
 ## Como testar (Temporário)
 1. crie, na raíz do projeto, uma pasta build
