@@ -37,33 +37,63 @@
 using namespace ftxui;
 using namespace std::chrono_literals;
 
-class Graph {
- public:
-  std::vector<int> operator()(int width, int height) const {
-    std::vector<int> output(width);
-    for (int i = 0; i < width; ++i) {
-      float v = 0;
-      v += 0.1f * sin((i + shift) * 0.1f);        // NOLINT
-      v += 0.2f * sin((i + shift + 10) * 0.15f);  // NOLINT
-      v += 0.1f * sin((i + shift) * 0.03f);       // NOLINT
-      v *= height;                                // NOLINT
-      v += 0.5f * height;                         // NOLINT
-      output[i] = static_cast<int>(v);
-    }
-    return output;
-  }
-  int shift = 0;
-};
- 
-std::vector<int> triangle(int width, int height) {
-  std::vector<int> output(width);
-  for (int i = 0; i < width; ++i) {
-    output[i] = i % (height - 4) + 2;
-  }
-  return output;
+ftxui::Element imprimeascii() {
+    return ftxui::vbox({
+        ftxui::text("      \\   /     "),
+        ftxui::text("       .-.      "),
+        ftxui::text("    ― (   ) ―   "),
+        ftxui::text("       `-’      "),
+        ftxui::text("      /   \\     "),
+    });
 }
 
-Element create_weather_element(const Graph& my_graph) {
+class Graph
+{
+public:
+    Graph(getCoordinates &getcoords, getTime &gettime, hourlyDataFilter &hourlyfilter)
+        : getcoordinates(getcoords), gettime(gettime), hourlydatafilter(hourlyfilter)
+    {
+    }
+
+    std::vector<int> operator()(int width, int height) const
+    {
+        std::vector<int> output(23);
+        float max_value = 0.0f;
+
+        // Encontra o valor máximo do gráfico em todas as colunas.
+        for (unsigned int i = 0; i < 23; ++i)
+        {
+            unsigned int hour = i;
+            std::string correcthour;
+            if (hour < 10)
+            {
+                correcthour = "0" + std::to_string(hour) + ":00";
+            }
+            else
+            {
+                correcthour = std::to_string(hour) + ":00";
+            }
+            std::string date = gettime.Date();
+            std::string completedatewoutmin = date + "T" + correcthour;
+            std::string now = hourlydatafilter.getTemperatureDataAtTime(completedatewoutmin);
+            float now_value = std::stof(now);
+            max_value = std::max(max_value, now_value);
+
+            float v = now_value * (height / 40.0f);
+            output[i] = static_cast<int>(v);
+        }
+        return output;
+    }
+
+private:
+    getCoordinates &getcoordinates;
+    getTime &gettime;
+    hourlyDataFilter &hourlydatafilter;
+    int shift;
+};
+
+Element create_weather_element(const Graph &my_graph)
+{
     auto document = hbox({
         vbox({
             graph(my_graph),
@@ -72,7 +102,7 @@ Element create_weather_element(const Graph& my_graph) {
 
     document |= border;
 
-    const int min_width = 40;
+    const int min_width = 23;
     document |= size(HEIGHT, GREATER_THAN, min_width);
 
     return document;
@@ -85,6 +115,7 @@ int main()
     getTime gettime;
     hourlyDataFilter hourlydatafilter;
     weatherdatafetcher weatherdatafetcher;
+    Graph my_graph(getcoordinates, gettime, hourlydatafilter);
 
     int shift = 0;
 
@@ -111,9 +142,6 @@ int main()
         yourlocal,
         button,
     });
-
-    Graph my_graph;
-    Element weather_element = create_weather_element(my_graph);
 
     auto weather_renderer = Renderer(component, [&]
                                      { 
@@ -159,11 +187,25 @@ int main()
             std::string maxmin = min + " - " + max + " °C";
             std::string now = hourlydatafilter.getTemperatureDataAtTime(completedatewoutmin);
 
+            Element weather_element = create_weather_element(my_graph);
             return vbox({
                 hbox({
+                    /*vbox({
+                        text("Frequency [Mhz]") | hcenter,
+                        hbox({
+                            vbox({
+                                text("2400 "),
+                                filler(),
+                                text("1200 "),
+                                filler(),
+                                text("0 "),
+                            }),
+                             graph(std::ref(my_graph)) | size(WIDTH, GREATER_THAN, 80) | size(HEIGHT, EQUAL, 20),
+                        }) | flex,
+                    }),*/
                     vbox({
-                        weather_element | size(WIDTH, EQUAL, 100) | size(HEIGHT, EQUAL, 30),
-                    }),
+                        imprimeascii() | ftxui::center | ftxui::flex,
+                    }) | center | flex,
                     separator(),
                     vbox({
                         text(maxmin),
