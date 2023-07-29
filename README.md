@@ -5,7 +5,8 @@
 ![image](https://github.com/Lucas-Rezende/weather-wpp/assets/66080424/c5a68b8a-320a-43de-9b61-90ec38e44305)
 
 <p align="center">
-  <a href="#"><img src="https://img.shields.io/badge/c++-%2300599C.svg?style=flat&logo=c%2B%2B&logoColor=white"></img></a>
+  <a href="#"><img src="https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white"></img></a>
+  <a href="#"><img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"></img></a>
 </p>
 
 ## Introduction
