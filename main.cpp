@@ -20,6 +20,7 @@
 #include "include/gettime.hpp"
 #include "include/hourlydatafilter.hpp"
 #include "include/weatherdatafetcher.hpp"
+#include "src/selectascii.cpp"
 
 #include "ftxui/component/captured_mouse.hpp"
 #include "ftxui/component/component.hpp"
@@ -36,16 +37,6 @@
 
 using namespace ftxui;
 using namespace std::chrono_literals;
-
-ftxui::Element imprimeascii() {
-    return ftxui::vbox({
-        ftxui::text("      \\   /     "),
-        ftxui::text("       .-.      "),
-        ftxui::text("    ― (   ) ―   "),
-        ftxui::text("       `-’      "),
-        ftxui::text("      /   \\     "),
-    });
-}
 
 class Graph
 {
@@ -186,30 +177,27 @@ int main()
             std::string min = ssMin.str();
             std::string maxmin = min + " - " + max + " °C";
             std::string now = hourlydatafilter.getTemperatureDataAtTime(completedatewoutmin);
+            std::string precipitation = hourlydatafilter.getPrecipitationProbabilityDataAtTime(completedatewoutmin) + "%";
+            std::string humidity = "Humidity" + hourlydatafilter.getRelativeHumidityDataAtTime(completedatewoutmin);
+
+            unsigned int weathercode = std::stoi(hourlydatafilter.getWeatherCodeDataAtTime(completedatewoutmin));
 
             Element weather_element = create_weather_element(my_graph);
             return vbox({
                 hbox({
-                    /*vbox({
-                        text("Frequency [Mhz]") | hcenter,
-                        hbox({
-                            vbox({
-                                text("2400 "),
-                                filler(),
-                                text("1200 "),
-                                filler(),
-                                text("0 "),
-                            }),
-                             graph(std::ref(my_graph)) | size(WIDTH, GREATER_THAN, 80) | size(HEIGHT, EQUAL, 20),
-                        }) | flex,
-                    }),*/
                     vbox({
-                        imprimeascii() | ftxui::center | ftxui::flex,
+                        getWeatherSymbol(weathercode) | center | flex,                        
                     }) | center | flex,
                     separator(),
                     vbox({
-                        text(maxmin),
-                        text(now),
+                        text("Current Weather"),
+                        text(now) | bold,
+                        text("\n"),
+                        text("Max. and Min. Temperature"),
+                        text(maxmin) | bold,
+                        text("\n"),
+                        text("Precipitation Probability"),
+                        text(precipitation) | bold,
                     }) | center | flex,
                 }),
             }) | center | bgcolor(Color::RGB(109, 76, 182));
