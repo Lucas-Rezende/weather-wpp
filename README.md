@@ -8,11 +8,9 @@
   <a href="#"><img src="https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white"></img></a>
   <a href="#"><img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"></img></a>
   <br>
-  <p>Tested on: </p>
-  <a href="#"><img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white
-"></img></a>
-  <a href="#"><img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black
-"></img></a>
+  <a href="#"><img src="https://img.shields.io/badge/Tested%20on%20Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"></img></a>
+  <a href="#"><img src="https://img.shields.io/badge/Tested%20on%20Linux-87CEEB?style=for-the-badge&logo=linux&logoColor=black"></img></a>
+  <a href="#"><img src="https://img.shields.io/badge/Developed%20in%20Arch-1793D1?style=for-the-badge&logo=arch-linux&logoColor=white"></img></a>
 </p>
 
 ## Introduction
