@@ -7,13 +7,31 @@
 <p align="center">
   <a href="#"><img src="https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white"></img></a>
   <a href="#"><img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"></img></a>
+  <br>
+  <p>Tested on: </p>
+  <a href="#"><img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white
+"></img></a>
+  <a href="#"><img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black
+"></img></a>
 </p>
 
 ## Introduction
-Weather-wpp is a terminal GUI weather information program based on the [FTXUI library](https://github.com/ArthurSonzogni/FTXUI).
+Weather-wpp is a terminal GUI weather information program based on the [FTXUI library](https://github.com/ArthurSonzogni/FTXUI) and use data from [Open-Meteo API](https://open-meteo.com/).
 
 ## Requirements
-To fully use this code, your terminal must support UTF-8 and be configured with a font that includes emoji glyphs, in addition to being in a recent version.
+To fully use this code, your terminal must support UTF-8 and be configured with a font that includes emoji glyphs, in addition to being in a recent version. In addition, it is necessary that you have pre-installed GNU Make and Make, in order to carry out all the commands.
+
+## Devices
+When using the program, you will have access to weather information in your location using the [Open-Meteo API](https://open-meteo.com/) as a reference.
+
+The program has hourly (given every hour) and daily (fixed for the whole day) information. You will have access to information such as:
+<ul>
+  <li>Temperature based on your operating system time</li>
+  <li>Maximum and minimum temperature</li>
+  <li>Precipitation Probability with more than 0.1 mm of the preceding hour</li>
+  <li>Humidity</li>
+  <li>Weather Code</li>
+</ul>
 
 ## Usage
 Initially, it is necessary that you clone this project on your machine, with the installation location being something that can be quickly accessed via a terminal. To do so, issue the following command in your terminal with the chosen installation folder:
