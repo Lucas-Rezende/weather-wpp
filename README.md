@@ -6,10 +6,6 @@
 
 <p align="center">
   <a href="#"><img src="https://img.shields.io/badge/c++-%2300599C.svg?style=flat&logo=c%2B%2B&logoColor=white"></img></a>
-
-  <a href="https://github.com/ArthurSonzogni/FTXUI/issues">Report a Bug</a> ·
-  <a href="https://github.com/ArthurSonzogni/FTXUI/issues">Request Feature</a> ·
-  <a href="https://github.com/ArthurSonzogni/FTXUI/pulls">Send a Pull Request</a>
 </p>
 
 ## Introduction
